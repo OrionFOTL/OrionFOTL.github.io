@@ -97,21 +97,22 @@ $(document).ready(function () {
 
 	function checkIfFinished() {
 		if (pozostaleKarty == 0) {
-			winners.push({name: prompt("Wygrałeś! Wpisz swoje imię:"), score: punkty});
+			winners.push({ name: prompt("Wygrałeś! Wpisz swoje imię:"), score: punkty });
 			winners.sort(compareWinners);
 			refreshScoreboard();
 		}
 	}
 
-	function compareWinners(a,b){
+	function compareWinners(a, b) {
 		return b.score - a.score;
 	}
 
 	function refreshScoreboard() {
 		$("#scoreboard").empty();
 		for (let i = 0; i < winners.length; i++) {
-			$("#scoreboard").append("<li>" + winners[i].name + ": " + winners[i].score + " punktów");
+			$("#scoreboard").append("<li>" + winners[i].name + ": " + winners[i].score + " punktów</li>");
 		}
+		prepareDownload();
 	}
 
 	$("#cardLess").click(function (e) {
@@ -132,6 +133,14 @@ $(document).ready(function () {
 		start();
 	});
 
+	function prepareDownload() {
+		var eksportVals = "";
+		for (let i = 0; i < winners.length; i++) {
+			eksportVals += i+1 + ". " + winners[i].name + ": " + winners[i].score + " punktów\n";
+		}
+		$("#eksport").attr('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(eksportVals));
+		$("#eksport").attr('download', 'wyniki.txt');
+	}
 });
 
 function shuffle(array) {
