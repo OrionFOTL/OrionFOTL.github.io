@@ -23,7 +23,7 @@ $(document).ready(function () {
 		$("#cardsNumber").text(numberofCards);				//update liczby kart
 		generateCards();									//generowanie divów na karty
 		assignCards();										//przypisanie każdej karcie obrazka
-		$("#punkty").html("Twoje punkty: " + punkty);		//update punktów
+		$("#punkty").html("Your points: " + punkty);		//update punktów
 		$("#ruchy").html(ruchy);							//update ruchów
 
 		$(".card").on('click', function (e) {  				//przy kliknięciu na kartę
@@ -86,7 +86,7 @@ $(document).ready(function () {
 	}
 	function addScore(zmiana) {
 		punkty += zmiana;
-		$("#punkty").html("Twoje punkty: " + punkty);
+		$("#punkty").html("Your points: " + punkty);
 		if (zmiana > 0) {
 			$("#punkty").animate({ color: "#09ff00" }, 300, function () {
 				$("#punkty").animate({ color: "black" }, 300)
@@ -100,7 +100,7 @@ $(document).ready(function () {
 
 	function checkIfFinished() {
 		if (pozostaleKarty == 0) {
-			winners.push({ name: prompt("Wygrałeś! Wpisz swoje imię:"), score: punkty });
+			winners.push({ name: prompt("You won! Enter your name:"), score: punkty });
 			winners.sort(compareWinners);
 			refreshScoreboard();
 		}
@@ -113,7 +113,7 @@ $(document).ready(function () {
 	function refreshScoreboard() {
 		$("#scoreboard").empty();
 		for (let i = 0; i < winners.length; i++) {
-			$("#scoreboard").append("<li>" + winners[i].name + ": " + winners[i].score + " punktów</li>");
+			$("#scoreboard").append("<li>" + winners[i].name + ": " + winners[i].score + " points</li>");
 		}
 		prepareDownload();
 	}
@@ -131,7 +131,7 @@ $(document).ready(function () {
 			$("#cardsNumber").text(numberofCards);
 			start();
 		}
-		else alert("Brakuje obrazków aby zrobić więcej kart!")
+		else alert("Not enough fruits for more tiles!")
 	});
 
 	$("#restart").click(function (e) {
@@ -141,11 +141,11 @@ $(document).ready(function () {
 	function prepareDownload() {					//zapis wyników do pliku
 		var eksportVals = "";
 		for (let i = 0; i < winners.length; i++) {
-			eksportVals += i + 1 + ". " + winners[i].name + ": " + winners[i].score + " punktów\n";
+			eksportVals += i + 1 + ". " + winners[i].name + ": " + winners[i].score + " points\n";
 		}
 		$("#eksport").attr('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(eksportVals));
 		$("#eksport").attr('download', 'wyniki.txt');
-		$("#eksport").text('Zapisz wyniki do pliku!');
+		$("#eksport").text('Save scores to a file!');
 	}
 });
 
